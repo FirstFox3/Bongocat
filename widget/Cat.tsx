@@ -29,6 +29,8 @@ export default function Cat() {
 		application={app}
 		layer={Astal.Layer.OVERLAY}
 		anchor={BOTTOM | RIGHT}
+		name="Bongocat"
+		namespace="Bongocat"
 		class="Cat"
 	>
 		<image $={self => image = self} file={file(val => `assets/${val}.png`)} pixelSize={256} />
