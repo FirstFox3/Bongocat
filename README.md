@@ -3,10 +3,9 @@ An adorable AGS shell that creates a little bongocat for your desktop. Designed 
 # Building
 This will need to be built with AGS, specifically the `ags bundle` command.
 
-# WARNING
-Allowing this program to read libinput can be difficult as sudo is needed. In testing, I added my user to the input group with the command `sudo usermod -a -G input $USER` (swapping the -a for -r removes from the group). You probably should not do this long term (but maybe just to try this out? Please?). However, this is generally unsafe as anyone can interfere with your input, such as keylogging. There's better alternatives to choose specific devices using udev, but I don't know the details and that sounds like a great question for a search on Reddit. The bongocat only moves when an event reads with `pressed` or `released` in the logs. Keep that in mind when deciding devices. This really only applies to the mouse and keyboard (as I've seen in the very limited testing).
+# Usage
+Because this relies on `libinput-tools` for key-reading, `sudo` is required to run it. However, the `WAYLAND_DISPLAY` and `XDG_RUNTIME_DIR` variables must be preserved. This is easiest with the `-E` flag on `sudo`.
 
 # TODO
 * Let you exit (Whoops)
 * Give more options for how it's displayed
-* Give more explanation for setting it up (or make a setup script)
