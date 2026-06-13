@@ -1,30 +1,37 @@
 import app from "ags/gtk4/app"
 import { Astal, Gtk } from "ags/gtk4"
 import { createState } from "ags"
+import { subprocess } from "ags/process"
+
+let [file, setFile] = createState("none")
+let leftNext: Boolean = true
+let image: Gtk.Image
+
+function onKeyPressed(..._ignored: any[]) {
+	setFile(leftNext ? "left" : "right")
+	leftNext = !leftNext
+}
+
+function onKeyReleased(..._ignored: any[]) {
+	setFile("none")
+}
+
+subprocess("libinput debug-events", (stdout: string) => {
+	if (stdout.includes("pressed")) onKeyPressed()
+	else if (stdout.includes("released")) onKeyReleased()
+})
 
 export default function Cat() {
 	const { BOTTOM, RIGHT } = Astal.WindowAnchor
 
 	// When nothing is pressed, do nothing. Else, alternate between left and right.
 
-	let [file, setFile] = createState("none")
-	let leftNext: Boolean = true
-	let image: Gtk.Image
-
-	function onKeyPressed(..._ignored: any[]) {
-		setFile(leftNext ? "left" : "right")
-		leftNext = !leftNext
-	}
-
-	function onKeyReleased(..._ignored: any[]) {
-		setFile("none")
-	}
 	
 	return (<window
 		visible
 		application={app}
 		layer={Astal.Layer.OVERLAY}
-		keymode={Astal.Keymode.ON_DEMAND}
+		// keymode={Astal.Keymode.ON_DEMAND}
 		anchor={BOTTOM | RIGHT}
 		class="Cat"
 	>
