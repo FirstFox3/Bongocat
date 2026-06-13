@@ -5,6 +5,6 @@ import Cat from "./widget/Cat.tsx"
 app.start({
   css: style,
   main() {
-	  <Cat />
+	  app.get_monitors().map(Cat)
   },
 })
